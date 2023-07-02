@@ -1,4 +1,5 @@
 const QuestionModel = require("../models/questionModel");
+const AnswerModel = require("../models/answerModel");
 const UserModel = require("../models/userModel");
 const uniqid = require("uniqid");
 
@@ -50,12 +51,31 @@ module.exports.GET_QUESTION_BY_ID = async (req, res) => {
 
 
 
+// module.exports.DELETE_QUESTION_BY_ID = async (req, res) => {
+//   try {
+//     const question = await QuestionModel.deleteOne({ _id: req.params.id });
+//     res.status(200).json({ question: question });
+//   } catch (err) {
+//     console.log("ERR", err);
+//     res.status(500).json({ response: "ERROR, please try later" });
+//   }
+// };
+
 module.exports.DELETE_QUESTION_BY_ID = async (req, res) => {
   try {
-    const question = await QuestionModel.deleteOne({ _id: req.params.id });
-    res.status(200).json({ question: question });
-  } catch (err) {
-    console.log("ERR", err);
-    res.status(500).json({ response: "ERROR, please try later" });
+    const { id } = req.params;
+
+    const question = await QuestionModel.findByIdAndDelete(id);
+    if (!question) {
+      return res.status(404).json({ response: "Question not found" });
+    }
+
+    await AnswerModel.deleteMany({ question_id: question._id });
+
+    return res.status(200).json({ response: "Question and associated answers were deleted" });
+  } catch (error) {
+    console.log("err", error);
+    return res.status(500).json({ response: "ERROR" });
   }
 };
+
