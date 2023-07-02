@@ -8,9 +8,9 @@ const {
   DELETE_QUESTION_BY_ID, 
 } = require("../controllers/question");
 
-router.post("/question",CREATE_QUESTION);
+router.post("/question", authMiddleware, CREATE_QUESTION);
 router.get("/questions", GET_ALL_QUESTIONS);
-router.get("/question/:id", GET_QUESTION_BY_ID);
-router.delete("/question/:id", DELETE_QUESTION_BY_ID);
+router.get("/question/:id", authMiddleware, GET_QUESTION_BY_ID);
+router.delete("/question/:id", authMiddleware, DELETE_QUESTION_BY_ID);
 
 module.exports = router;

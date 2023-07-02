@@ -7,7 +7,7 @@ module.exports.CREATE_QUESTION = async (req, res) => {
    try {
     const question = new QuestionModel({
       id: uniqid(),
-        question_text:req.body.question_text,
+      question_text:req.body.question_text,
     })
 
     const createdQuestion = await question.save();
@@ -22,7 +22,7 @@ module.exports.CREATE_QUESTION = async (req, res) => {
       console.log("err", err);
       return res.status(500).json({ response: "ERROR" });
     }
-  };
+};
   
 
 module.exports.GET_ALL_QUESTIONS = async (req, res) => {
@@ -49,17 +49,6 @@ module.exports.GET_QUESTION_BY_ID = async (req, res) => {
   }
 };
 
-
-
-// module.exports.DELETE_QUESTION_BY_ID = async (req, res) => {
-//   try {
-//     const question = await QuestionModel.deleteOne({ _id: req.params.id });
-//     res.status(200).json({ question: question });
-//   } catch (err) {
-//     console.log("ERR", err);
-//     res.status(500).json({ response: "ERROR, please try later" });
-//   }
-// };
 
 module.exports.DELETE_QUESTION_BY_ID = async (req, res) => {
   try {
