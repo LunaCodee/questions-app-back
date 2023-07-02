@@ -52,7 +52,7 @@ module.exports.GET_QUESTION_BY_ID = async (req, res) => {
 
 module.exports.DELETE_QUESTION_BY_ID = async (req, res) => {
   try {
-    const question = await QuestionModel.deleteOne({ id: req.params._id });
+    const question = await QuestionModel.deleteOne({ _id: req.params.id });
     res.status(200).json({ question: question });
   } catch (err) {
     console.log("ERR", err);
